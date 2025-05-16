@@ -1,11 +1,11 @@
 # Generic Leaflet Tester
 
-A simple web application that demonstrates the use of Leaflet.js with Google Maps tile layers.
+A simple web application that demonstrates the use of Leaflet.js with OpenStreetMap tile layers.
 
 ## Features
 
 - Displays a map using Leaflet.js
-- Uses Google Maps tiles via the URL: `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}`
+- Uses OpenStreetMap tiles via the URL: `https://tile.openstreetmap.org/{z}/{x}/{y}.png`
 - Includes a sample marker with popup
 - Includes a scale control
 
@@ -24,4 +24,4 @@ A simple web application that demonstrates the use of Leaflet.js with Google Map
 
 ## Notes
 
-This is a basic demonstration. Google Maps tiles may have usage restrictions, so please review Google's terms of service before using in a production environment.
+This is a basic demonstration. OpenStreetMap tiles may have usage restrictions, so please review OpenStreetMap's terms of service before using in a production environment.

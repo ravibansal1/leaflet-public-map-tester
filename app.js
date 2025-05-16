@@ -27,7 +27,8 @@ map.on('layerremove', function(e) {
 
 // Add a base map (Google Maps style)
 const baseLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 22
+  maxZoom: 22,
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 // Array to store all custom layers
