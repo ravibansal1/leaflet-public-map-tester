@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Map</title>
+ <!-- Import leaflet -->
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!-- Import ellipsis library -->
+<script src="https://github.com/ellipsis-drive/ellipsis-js-util/releases/download/1.3.3/ellipsis-js-util-1.3.3.js"></script>
+<script src="https://github.com/ellipsis-drive/leaflet-package/releases/download/v3.1.4/leaflet-ellipsis-3.1.4.js"></script>
+  <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
+  <style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+    }
+    .controls {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .controls input, .controls select {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        flex-grow: 1;
+    }
+    .controls button {
+        padding: 8px 15px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .controls button:hover {
+        background: #45a049;
+    }
+    .layer-list-container {
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        z-index: 1000;
+        width: 250px;
+        max-height: 50vh;
+        overflow-y: auto;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .layer-list h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 16px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+    }
+    #active-layers {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .layer-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+    }
+    .layer-item:last-child {
+        border-bottom: none;
+    }
+    .layer-item .layer-name {
+        flex-grow: 1;
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .layer-item .layer-type {
+        background: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-right: 8px;
+    }
+    .remove-layer {
+        background: #ff5252;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        padding: 2px 6px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+    .remove-layer:hover {
+        background: #ff3232;
+    }
+    #map {
+        height: 100vh;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+  <div class="controls">
+    <input type="text" id="url-input" placeholder="Enter URL..." />
+    <select id="maptype-select">
+      <option value="TILE">TILE</option>
+      <option value="GEOJSON">GEOJSON</option>
+      <option value="VECTORGRID">VECTORGRID</option>
+    </select>
+    <button id="add-map-btn">ADD MAP</button>
+  </div>
+  <div class="layer-list-container">
+    <div class="layer-list">
+      <h3>Active Layers</h3>
+      <ul id="active-layers"></ul>
+    </div>
+  </div>
+  <div id="map"></div>
+ 
+  <script src="app.js"></script>
+</body>
+</html>
