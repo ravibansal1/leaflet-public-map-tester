@@ -1,6 +1,8 @@
 # Generic Leaflet Tester
 
-A simple web application that demonstrates the use of Leaflet.js with OpenStreetMap tile layers.
+A simple web application that demonstrates the use of Leaflet.js with OpenStreetMap tile layers. Quickly test whether or not a mapping url is publicly accessible to render in a map using leaflet.
+
+![Leaflet Layer Tester Screenshot](images/quickLeafletLayerTester.png)
 
 ## Features
 
