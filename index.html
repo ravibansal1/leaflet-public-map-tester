@@ -124,12 +124,14 @@ href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
 <body>
   <div class="controls">
     <input type="text" id="url-input" placeholder="Enter URL..." />
+    <input type="file" id="file-input" accept=".geojson,.json" />
     <select id="maptype-select">
       <option value="TILE">TILE</option>
       <option value="GEOJSON">GEOJSON</option>
       <option value="VECTORGRID">VECTORGRID</option>
     </select>
     <button id="add-map-btn">ADD MAP</button>
+    <button id="add-file-btn">ADD GEOJSON FILE</button>
   </div>
   <div class="layer-list-container">
     <div class="layer-list">

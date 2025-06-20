@@ -10,6 +10,7 @@ A simple web application that demonstrates the use of Leaflet.js with OpenStreet
 - Uses OpenStreetMap tiles via the URL: `https://tile.openstreetmap.org/{z}/{x}/{y}.png`
 - Includes a sample marker with popup
 - Includes a scale control
+- Load additional map layers via URL or local GeoJSON file
 
 ## How to Run
 

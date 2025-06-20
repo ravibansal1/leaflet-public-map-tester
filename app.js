@@ -103,6 +103,31 @@ function createGeoJSONLayer(url) {
   });
 }
 
+// Function to create a GeoJSON layer from already loaded data
+function createGeoJSONLayerFromData(data) {
+  return L.geoJSON(data, {
+    style: function(feature) {
+      return {
+        color: '#c75b1c',
+        weight: 2,
+        opacity: 1,
+        fillColor: '#c75b1c',
+        fillOpacity: 0.5
+      };
+    },
+    pointToLayer: function(feature, latlng) {
+      return L.circleMarker(latlng, {
+        radius: 6,
+        fillColor: '#c75b1c',
+        color: '#c75b1c',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.5
+      });
+    }
+  });
+}
+
 // Function to create a Vector Grid layer
 function createVectorGridLayer(url) {
   return L.vectorGrid.protobuf(url, {
@@ -281,6 +306,45 @@ document.getElementById('add-map-btn').addEventListener('click', async function(
   } catch (error) {
     console.error('Error creating layer:', error);
     alert(`Error creating layer: ${error.message}`);
+  }
+});
+
+// Handle adding a GeoJSON layer from a local file
+document.getElementById('add-file-btn').addEventListener('click', async function() {
+  const fileInput = document.getElementById('file-input');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert('Please select a GeoJSON file');
+    return;
+  }
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    const layerId = generateLayerId();
+    const displayName = file.name;
+    const layer = createGeoJSONLayerFromData(data);
+
+    layer.addTo(map);
+
+    customLayers.push({
+      id: layerId,
+      type: 'GEOJSON',
+      url: file.name,
+      name: displayName,
+      layer: layer
+    });
+
+    addLayerToList(layerId, displayName, 'GEOJSON', layer);
+
+    console.log(`GEOJSON layer (${layerId}) added from file`);
+
+    fileInput.value = '';
+  } catch (error) {
+    console.error('Error reading GeoJSON file:', error);
+    alert(`Error reading GeoJSON file: ${error.message}`);
   }
 });
 
