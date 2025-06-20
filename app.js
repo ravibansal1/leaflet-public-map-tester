@@ -62,7 +62,12 @@ function createTileLayer(url) {
 }
 
 // Function to create a GeoJSON layer
-function createGeoJSONLayer(url) {
+function createGeoJSONLayer(url, options) {
+  const opts = options || {};
+  const color = opts.color || '#c75b1c';
+  const radius = opts.radius || 6;
+  const shape = opts.shape || 'circle';
+
   // Return a promise to handle async loading
   return new Promise((resolve, reject) => {
     fetch(url)
@@ -76,18 +81,30 @@ function createGeoJSONLayer(url) {
         const layer = L.geoJSON(data, {
           style: function(feature) {
             return {
-              color: '#c75b1c',
+              color: color,
               weight: 2,
               opacity: 1,
-              fillColor: '#c75b1c',
+              fillColor: color,
               fillOpacity: 0.5
             };
           },
           pointToLayer: function(feature, latlng) {
+            if (shape === 'square') {
+              const size = radius * 2;
+              const html = `<div style="width:${size}px;height:${size}px;background:${color}"></div>`;
+              return L.marker(latlng, {
+                icon: L.divIcon({
+                  className: 'custom-marker-square',
+                  html: html,
+                  iconSize: [size, size],
+                  iconAnchor: [size / 2, size / 2]
+                })
+              });
+            }
             return L.circleMarker(latlng, {
-              radius: 6,
-              fillColor: '#c75b1c',
-              color: '#c75b1c',
+              radius: radius,
+              fillColor: color,
+              color: color,
               weight: 1,
               opacity: 1,
               fillOpacity: 0.5
@@ -104,22 +121,39 @@ function createGeoJSONLayer(url) {
 }
 
 // Function to create a GeoJSON layer from already loaded data
-function createGeoJSONLayerFromData(data) {
+function createGeoJSONLayerFromData(data, options) {
+  const opts = options || {};
+  const color = opts.color || '#c75b1c';
+  const radius = opts.radius || 6;
+  const shape = opts.shape || 'circle';
+
   return L.geoJSON(data, {
     style: function(feature) {
       return {
-        color: '#c75b1c',
+        color: color,
         weight: 2,
         opacity: 1,
-        fillColor: '#c75b1c',
+        fillColor: color,
         fillOpacity: 0.5
       };
     },
     pointToLayer: function(feature, latlng) {
+      if (shape === 'square') {
+        const size = radius * 2;
+          const html = `<div style="width:${size}px;height:${size}px;background:${color}"></div>`;
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              className: 'custom-marker-square',
+              html: html,
+              iconSize: [size, size],
+              iconAnchor: [size / 2, size / 2]
+            })
+          });
+      }
       return L.circleMarker(latlng, {
-        radius: 6,
-        fillColor: '#c75b1c',
-        color: '#c75b1c',
+        radius: radius,
+        fillColor: color,
+        color: color,
         weight: 1,
         opacity: 1,
         fillOpacity: 0.5
@@ -241,6 +275,9 @@ function addLayerToList(id, name, type, layer) {
 document.getElementById('add-map-btn').addEventListener('click', async function() {
   const url = document.getElementById('url-input').value.trim();
   const mapType = document.getElementById('maptype-select').value;
+  const color = document.getElementById('marker-color').value || '#c75b1c';
+  const size = parseInt(document.getElementById('marker-size').value, 10) || 6;
+  const shape = document.getElementById('marker-shape').value || 'circle';
   
   if (!url) {
     alert('Please enter a URL');
@@ -261,7 +298,7 @@ document.getElementById('add-map-btn').addEventListener('click', async function(
         layer = createTileLayer(url);
         break;
       case 'GEOJSON':
-        layer = await createGeoJSONLayer(url);
+        layer = await createGeoJSONLayer(url, { color: color, radius: size, shape: shape });
         break;
       case 'VECTORGRID':
         layer = createVectorGridLayer(url);
@@ -313,6 +350,9 @@ document.getElementById('add-map-btn').addEventListener('click', async function(
 document.getElementById('add-file-btn').addEventListener('click', async function() {
   const fileInput = document.getElementById('file-input');
   const file = fileInput.files[0];
+  const color = document.getElementById('marker-color').value || '#c75b1c';
+  const size = parseInt(document.getElementById('marker-size').value, 10) || 6;
+  const shape = document.getElementById('marker-shape').value || 'circle';
 
   if (!file) {
     alert('Please select a GeoJSON file');
@@ -325,7 +365,7 @@ document.getElementById('add-file-btn').addEventListener('click', async function
 
     const layerId = generateLayerId();
     const displayName = file.name;
-    const layer = createGeoJSONLayerFromData(data);
+    const layer = createGeoJSONLayerFromData(data, { color: color, radius: size, shape: shape });
 
     layer.addTo(map);
 

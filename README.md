@@ -11,6 +11,7 @@ A simple web application that demonstrates the use of Leaflet.js with OpenStreet
 - Includes a sample marker with popup
 - Includes a scale control
 - Load additional map layers via URL or local GeoJSON file
+- Customize point marker color, size and shape when adding GEOJSON layers
 
 ## How to Run
 

@@ -130,6 +130,12 @@ href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
       <option value="GEOJSON">GEOJSON</option>
       <option value="VECTORGRID">VECTORGRID</option>
     </select>
+    <input type="color" id="marker-color" value="#c75b1c" title="Marker Color" />
+    <input type="number" id="marker-size" value="6" min="2" max="20" title="Marker Size" style="width:60px" />
+    <select id="marker-shape" title="Marker Shape">
+      <option value="circle">Circle</option>
+      <option value="square">Square</option>
+    </select>
     <button id="add-map-btn">ADD MAP</button>
     <button id="add-file-btn">ADD GEOJSON FILE</button>
   </div>
