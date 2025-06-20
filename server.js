@@ -18,11 +18,14 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
   console.log(`Request: ${req.url}`);
-  
+
+  // Strip query string from the URL to find the actual file path
+  const pathname = req.url.split('?')[0];
+
   // Handle root path
-  let filePath = req.url === '/' 
+  let filePath = pathname === '/'
     ? path.join(__dirname, 'index.html')
-    : path.join(__dirname, req.url);
+    : path.join(__dirname, pathname);
   
   const extname = path.extname(filePath);
   let contentType = MIME_TYPES[extname] || 'application/octet-stream';
@@ -46,6 +49,10 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
+  });
+}
+
+module.exports = server;

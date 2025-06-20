@@ -1,0 +1,7 @@
+{
+  "name": "leaflet-public-map-tester",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node tests/server.test.js"
+  }
+}
